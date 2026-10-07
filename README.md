@@ -8,18 +8,18 @@ An enterprise-grade, real-time supply chain monitoring platform and multi-agent 
 
 ###  1. Real-Time Telemetry & Streaming Pipeline
 * **Kafka Event Ingestion**: High-throughput telemetry producer streaming vehicle GPS, speed, and container thermal sensors[cite: 5, 11].
-* **PySpark Structured Streaming**: Real-time schema enforcement, geofencing, and thermal anomaly enrichment with micro-batch JDBC upserts into PostgreSQL[cite: 5, 11].
-* **Automated Data Quality & Drift Monitoring**: Integrated Great Expectations validation suites and Kolmogorov-Smirnov statistical data drift monitoring[cite: 6, 7].
+* **PySpark Structured Streaming**: Real-time schema enforcement, geofencing, and thermal anomaly enrichment with micro-batch JDBC upserts into PostgreSQL
+* **Automated Data Quality & Drift Monitoring**: Integrated Great Expectations validation suites and Kolmogorov-Smirnov statistical data drift monitoring.
 
 ### 2. Agentic Supply Chain Orchestration (LangGraph)
-* **Multi-Agent State Machine**: Cyclical LangGraph architecture featuring specialized Researcher, Risk Analyst, and Critic verification nodes[cite: 5, 6, 9].
-* **Hybrid Knowledge RAG**: Seamless integration with Neo4j knowledge graphs, `pgvector` similarity search, and SAP BAPI ERP connectors[cite: 8, 9, 11].
-* **Human-In-The-Loop (HITL) Guardrails**: Cryptographic HMAC signature generation and role-based sign-offs for critical automated decisions[cite: 6, 8, 10].
+* **Multi-Agent State Machine**: Cyclical LangGraph architecture featuring specialized Researcher, Risk Analyst, and Critic verification nodes.
+* **Hybrid Knowledge RAG**: Seamless integration with Neo4j knowledge graphs, `pgvector` similarity search, and SAP BAPI ERP connectors.
+* **Human-In-The-Loop (HITL) Guardrails**: Cryptographic HMAC signature generation and role-based sign-offs for critical automated decisions.
 
 ###  3. Executive Control Tower UI & Power BI Integration
-* **Embedded Analytics**: Live, authenticated Power BI report iFrames rendered smoothly inside Streamlit (`powerbi_embed.py`)[cite: 5, 13].
-* **Interactive Command Console**: Material risk matrix tracking for Automotive Bill of Materials (BOM) alongside live operational KPI alert cards[cite: 5, 13].
-* **Enterprise Security & Auth**: Azure AD OAuth service principal token management and HashiCorp Vault access policy enforcement[cite: 8, 13].
+* **Embedded Analytics**: Live, authenticated Power BI report iFrames rendered smoothly inside Streamlit (`powerbi_embed.py`).
+* **Interactive Command Console**: Material risk matrix tracking for Automotive Bill of Materials (BOM) alongside live operational KPI alert cards.
+* **Enterprise Security & Auth**: Azure AD OAuth service principal token management and HashiCorp Vault access policy enforcement.
 
 ---
 
