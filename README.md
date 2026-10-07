@@ -59,8 +59,6 @@ An enterprise-grade, real-time supply chain monitoring platform and multi-agent 
 
 ##  Repository Structure
 
-## 📂 Repository Structure
-
 ```text
 stern-watch-control-tower/
 ├── config/
