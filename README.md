@@ -1,4 +1,4 @@
-Markdown# Supply Chain Telemetry Control Tower & Agentic Command Center
+##Supply Chain Telemetry Control Tower & Agentic Command Center
 
 An enterprise-grade, real-time supply chain monitoring platform and multi-agent AI risk engine. The system ingests high-frequency vehicle telemetry and warehouse inventory events via **Apache Kafka**, processes micro-batches with **PySpark Structured Streaming**, persists operational state to **PostgreSQL**, and renders an executive control tower in **Streamlit** embedded with **Power BI** interactive visual reports and a **LangGraph** multi-agent risk assessment command center.
 
