@@ -57,33 +57,159 @@ An enterprise-grade, real-time supply chain monitoring platform and multi-agent 
 
 ---
 
-##  Repository Structure
+## Complete Repository Architecture & File Directory
 
 ```text
 stern-watch-control-tower/
+├── .github/
+│   └── workflows/
+│       ├── ci.yml                # Automated pytest E2E testing & security scanning pipeline
+│       └── secret_scan.yml       # Automated GitHub Push Protection & credential leak checks
 ├── config/
-│   └── settings.py               # Centralized connection URIs and environmental variables
+│   ├── __init__.py               # Package initialization marker
+│   ├── logging_config.json       # Structured JSON logger handlers & log levels
+│   ├── powerbi_config.json       # Power BI embed specs, report IDs, & tenant mappings
+│   ├── security_policy.yaml      # HMAC signature validation rules & HITL permission matrices
+│   └── settings.py               # Centralized connection URIs, environment variables, & secret bindings
+├── data/
+│   ├── mocks/                    # Mock supplier feeds & BOM inventory status datasets
+│   ├── sample_manifests/         # Sample shipping manifests & customs documentation
+│   └── telemetry_fixtures/       # Real-time GPS & thermal sensor test payloads
+├── deployment/
+│   ├── docker/
+│   │   ├── Dockerfile.airflow    # Orchestration service container image
+│   │   ├── Dockerfile.spark      # PySpark Structured Streaming consumer image
+│   │   └── Dockerfile.streamlit  # Control tower web application container image
+│   ├── helm/stern-watch/
+│   │   ├── templates/            # Kubernetes resource manifests (Deployments, Services, Ingress)
+│   │   ├── Chart.yaml            # Helm chart metadata & version control
+│   │   └── values.yaml           # Environment-specific values (replica counts, ports, memory limits)
+│   ├── terraform/
+│   │   ├── modules/              # Reusable IaC infrastructure modules (EKS, RDS, MSK)
+│   │   ├── main.tf               # Primary Terraform provider & resource definitions
+│   │   └── variables.tf          # Configurable infrastructure variables & secrets schema
+│   └── docker-compose.yml        # Multi-container orchestration (PostgreSQL, Kafka, Streamlit)
+├── docs/
+│   ├── architecture/
+│   │   ├── control_tower_architecture.png  # High-level enterprise control tower schematic
+│   │   ├── data_flow_diagram.png            # End-to-end Kafka & Spark telemetry streaming flow
+│   │   └── multi_agent_cyclical_flow.png   # Cyclical LangGraph multi-agent interaction graph
+│   ├── security/
+│   │   ├── data_governance_framework.md     # Governance, metadata, & lineage tracking specification
+│   │   └── rbac_matrix.md                  # Role-Based Access Control permission matrix
+│   └── deployment_guide.md                  # Comprehensive platform deployment manual
+├── mlops/
+│   ├── data_validation/
+│   │   └── expectations/
+│   │       ├── manifests_suite.json         # Great Expectations validation suite for shipping manifests
+│   │       └── telemetry_suite.json         # Great Expectations validation suite for Kafka telemetry
+│   ├── drift_monitors/
+│   │   └── ks_test_drift.py                 # Kolmogorov-Smirnov statistical data drift monitoring script
+│   └── mlflow_config.yaml                   # MLflow experiment tracking & model registry configuration
+├── orchestration/
+│   ├── dags/
+│   │   ├── __init__.py                   # DAG package marker
+│   │   ├── dag_batch_lakehouse_etl.py    # Airflow DAG for Lakehouse batch ingestion
+│   │   ├── dag_graph_sync.py             # Airflow DAG for LangGraph state sync
+│   │   ├── dag_ml_retrain_drift_check.py # Airflow DAG for drift monitoring & retraining
+│   │   └── dag_powerbi_dataset_refresh.py# Airflow DAG triggering Power BI dataset refresh
+│   ├── plugins/
+│   │   ├── __init__.py                   # Airflow plugins package marker
+│   │   └── custom_operators.py           # Custom Airflow hooks and operators
+│   └── __init__.py                       # Orchestration package initialization
+├── security/
+│   ├── hitl_audit/
+│   │   └── approval_logger.py            # Audit logger for Human-In-The-Loop operator sign-offs
+│   ├── kms/
+│   │   └── key_rotation_policy.json      # AWS KMS secret key rotation policy definition
+│   ├── neo4j_rbac/
+│   │   └── cypher_security_rules.cypher  # Cypher graph access control policies
+│   └── vault/
+│       └── policy.hcl                    # HashiCorp Vault access policy definition
 ├── src/
-│   ├── ingestion/
-│   │   ├── kafka_producers/
-│   │   │   └── telemetry_producer.py   # Simulates and streams vehicle telemetry JSON to Kafka
-│   │   └── spark_streaming/
-│   │       └── telemetry_geofence_stream.py # PySpark streaming consumer writing to PostgreSQL
 │   ├── agents/
-│   │   ├── state.py              # Shared AgentState TypedDict definition
-│   │   ├── researcher.py         # Researcher Agent node extracting inventory context
-│   │   ├── risk_analyst.py       # Risk Analyst node calculating line stoppage financial risks
-│   │   ├── critic.py             # Critic Agent node enforcing quality & verifying factuality
-│   │   └── graph_builder.py      # Compiles LangGraph state machine & edge routing
-│   └── ui/
-│       ├── main.py               # Primary Streamlit entry point
-│       └── components/
-│           ├── powerbi_embed.py  # Power BI iFrame embedded dashboard tab
-│           ├── bom_table.py      # Material risk matrix & Automotive BOM tracking
-│           └── agent_console.py  # Interactive multi-agent command console
-├── Makefile                      # Automated setup, service execution, and build commands
-├── requirements.txt              # Python dependency manifest
-└── README.md                     # Technical documentation
+│   │   ├── tools/
+│   │   │   ├── __init__.py       # Agent tools package marker
+│   │   │   ├── neo4j_tools.py    # Knowledge graph & lineage query tools
+│   │   │   ├── pgvector_tools.py # Vector similarity search & RAG retrieval tools
+│   │   │   └── sap_bapi_tools.py # SAP ERP integration & BAPI execution functions
+│   │   ├── __init__.py           # Agents package marker
+│   │   ├── critic.py             # Critic Agent node verifying factual accuracy & guardrails
+│   │   ├── graph_builder.py      # LangGraph state machine compiler & edge routing logic
+│   │   ├── researcher.py         # Researcher Agent node querying inventory context
+│   │   ├── risk_analyst.py       # Risk Analyst node calculating line-stoppage financial costs
+│   │   └── state.py              # AgentState TypedDict (research, analysis, critic feedback)
+│   ├── common/
+│   │   ├── __init__.py           # Common package initialization marker
+│   │   ├── db_clients.py         # Database connection poolers (PostgreSQL, Neo4j, ChromaDB)
+│   │   ├── exceptions.py         # Custom application exception handlers & error schemas
+│   │   ├── logger.py             # Global logging instance wrapper
+│   │   └── security.py           # Core cryptographic token generation & security utils
+│   ├── ingestion/
+│   │   ├── batch_etl/
+│   │   │   ├── __init__.py       # Batch ETL package marker
+│   │   │   ├── neo4j_graph_sync.py# Graph synchronization job for Neo4j supply chain nodes
+│   │   │   └── sap_idoc_extractor.py # Extractor module for SAP IDoc data documents
+│   │   ├── kafka_producers/
+│   │   │   ├── __init__.py       # Kafka producers package marker
+│   │   │   ├── erp_cdc_producer.py# Change Data Capture (CDC) producer for ERP updates
+│   │   │   └── telemetry_producer.py # Streams vehicle speed, location, & thermal JSON
+│   │   ├── spark_streaming/
+│   │   │   ├── __init__.py       # Spark streaming package marker
+│   │   │   ├── customs_manifest_parser.py # PySpark parser for shipping manifests & customs data
+│   │   │   └── telemetry_geofence_stream.py # PySpark consumer writing micro-batches to Postgres
+│   │   └── __init__.py           # Ingestion package initialization
+│   ├── models/
+│   │   ├── delay_predictor/
+│   │   │   ├── __init__.py       # Delay predictor package marker
+│   │   │   ├── feature_engineering.py # Feature extraction for shipment & ETA delays
+│   │   │   ├── predict.py        # Inference endpoint for transit delay predictions
+│   │   │   └── train.py          # Training pipeline for transit delay ML models
+│   │   ├── demand_forecaster/
+│   │   │   ├── __init__.py       # Demand forecaster package marker
+│   │   │   ├── inventory_runout_eval.py # Inventory depletion & safety stock runout evaluator
+│   │   │   └── prophet_forecaster.py # Time-series Prophet forecasting for material demand
+│   │   └── __init__.py           # Models package initialization
+│   ├── powerbi/
+│   │   ├── __init__.py           # Power BI integration package marker
+│   │   ├── auth.py               # Azure AD service principal OAuth token manager
+│   │   └── push_api_client.py    # Power BI REST Push API client for dataset updates
+│   ├── ui/
+│   │   ├── assets/
+│   │   │   ├── mercedes_logo.svg # Mercedes-Benz branding asset for header
+│   │   │   └── styles.css        # Custom CSS rules for Streamlit layout styling
+│   │   ├── components/
+│   │   │   ├── __init__.py       # UI components package marker
+│   │   │   ├── agent_console.py  # Interactive multi-agent command & control console
+│   │   │   ├── bom_table.py      # Automotive BOM material risk matrix & supplier tracker
+│   │   │   ├── header.py         # Navigation header & live telemetry indicator component
+│   │   │   ├── kpi_cards.py       # Metric summary cards for operational risk & ETA alerts
+│   │   │   └── powerbi_embed.py  # Embedded interactive Power BI dashboard iFrame tab
+│   │   ├── __init__.py           # UI package marker
+│   │   └── main.py               # Primary Streamlit application entry point
+│   └── __init__.py               # Source root package initialization
+├── tests/
+│   ├── e2e/
+│   │   └── test_streamlit_workflow.py# Playwright/Selenium E2E workflow testing for UI dashboard
+│   ├── integration/
+│   │   ├── test_kafka_pipeline.py# Integration test for Kafka producers and Spark consumers
+│   │   └── test_neo4j_queries.py # Integration test for Neo4j supply chain graph queries
+│   ├── unit/
+│   │   ├── test_agents.py        # Unit tests for LangGraph Researcher, Analyst, and Critic
+│   │   ├── test_powerbi_auth.py  # Unit test for Azure AD OAuth token generation
+│   │   ├── test_security.py      # Unit test for cryptographic signatures & RBAC validation
+│   │   └── test_spark_etl.py     # Unit test for PySpark schema transformations
+│   └── conftest.py               # Global Pytest fixtures, mock DB drivers, & environment setups
+├── .dockerignore                 # Excluded paths for Docker container builds
+├── .env.example                  # Sanitized environment variable configuration template
+├── .gitignore                    # Git tracking exclusion rules (excludes .env & secrets)
+├── LICENSE                       # Open-source license terms
+├── Makefile                      # Automated setup, database initialization, and run commands
+├── pyproject.toml                # Project build system, tool configs, and ruff/black settings
+├── README.md                     # Executive platform documentation & architecture guide
+├── requirements.txt              # Core Python dependency manifest
+└── setup.cfg                     # Legacy package metadata & flake8 linter rules
+```
 ---
 
 ##  Prerequisites & Setup
