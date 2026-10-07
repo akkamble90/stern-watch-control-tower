@@ -30,21 +30,21 @@ An enterprise-grade, real-time supply chain monitoring platform and multi-agent 
 ###  Executive Control Tower Dashboard & Power BI Embed
 *Real-time supply chain telematics, BOM risk matrix, and embedded Power BI workspace report.*
 
-![Executive Control Tower Dashboard](docs/architecture/control_tower_architecture.png)
+![Executive Control Tower Dashboard](docs/Screenshot/control_tower.png)
 
 <br/>
 
-###  Multi-Agent Cyclical Orchestration Flow
-*LangGraph state machine routing requests across Researcher, Risk Analyst, and Critic nodes.*
+###  Agentic_Risk_Assessment
+*LangGraph state machine routing requests across Researcher, Risk Analyst, and Critic node.*
 
-![LangGraph Cyclical Agent Architecture](docs/architecture/multi_agent_cyclical_flow.png)
+![Agentic Risk Assessment and Precautionary Measures](docs/Screenshot/Agentic_risk_assessment.png)
 
 <br/>
 
-###  Telemetry & Streaming Data Pipeline
-*End-to-end telemetry flow from Kafka producers through PySpark streaming into PostgreSQL.*
+###  Control and Risk Metrics
+*Stock Risk association and control .*
 
-![Telemetry Data Flow Diagram](docs/architecture/data_flow_diagram.png)
+![Risk_Metrics](docs/screenshot/Critical_sock_risk_metric.png)
 
 </div>
 
