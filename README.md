@@ -6,11 +6,49 @@ An enterprise-grade, real-time supply chain monitoring platform and multi-agent 
 
 ##  Key Features
 
-* **Real-time Event Ingestion & Streaming:** Ingests live vehicle telematics, GPS coordinates, ambient container temperatures, and speed telemetry using Apache Kafka.
-* **Distributed Stream Processing:** High-throughput PySpark Structured Streaming consumer for schema enforcement, anomaly detection (thermal spike and congestion flags), and windowed database upserts.
-* **Embedded Power BI Control Tower:** Embedded Power BI reports featuring stacked "water glass" warehouse storage capacity bars, pie charts for order fulfillment metrics (On-Time, Delayed, Returned), and interactive regional slicers.
-* **Cyclic Multi-Agent AI System:** Built on **LangGraph** (Researcher $\rightarrow$ Risk Analyst $\rightarrow$ Critic) to dynamically evaluate line-halt financial exposures (€/day stoppage costs) and suggest automated freight rerouting strategies.
-* **Automotive BOM Risk Tracking:** Strategic itemized monitoring across major vehicle subsystems (Engine/Powertrain, Braking, Suspension, Electrical, and Cooling/Exhaust).
+###  1. Real-Time Telemetry & Streaming Pipeline
+* **Kafka Event Ingestion**: High-throughput telemetry producer streaming vehicle GPS, speed, and container thermal sensors[cite: 5, 11].
+* **PySpark Structured Streaming**: Real-time schema enforcement, geofencing, and thermal anomaly enrichment with micro-batch JDBC upserts into PostgreSQL[cite: 5, 11].
+* **Automated Data Quality & Drift Monitoring**: Integrated Great Expectations validation suites and Kolmogorov-Smirnov statistical data drift monitoring[cite: 6, 7].
+
+### 2. Agentic Supply Chain Orchestration (LangGraph)
+* **Multi-Agent State Machine**: Cyclical LangGraph architecture featuring specialized Researcher, Risk Analyst, and Critic verification nodes[cite: 5, 6, 9].
+* **Hybrid Knowledge RAG**: Seamless integration with Neo4j knowledge graphs, `pgvector` similarity search, and SAP BAPI ERP connectors[cite: 8, 9, 11].
+* **Human-In-The-Loop (HITL) Guardrails**: Cryptographic HMAC signature generation and role-based sign-offs for critical automated decisions[cite: 6, 8, 10].
+
+###  3. Executive Control Tower UI & Power BI Integration
+* **Embedded Analytics**: Live, authenticated Power BI report iFrames rendered smoothly inside Streamlit (`powerbi_embed.py`)[cite: 5, 13].
+* **Interactive Command Console**: Material risk matrix tracking for Automotive Bill of Materials (BOM) alongside live operational KPI alert cards[cite: 5, 13].
+* **Enterprise Security & Auth**: Azure AD OAuth service principal token management and HashiCorp Vault access policy enforcement[cite: 8, 13].
+
+---
+
+##  System Screenshots & Interface Preview
+
+<div align="center">
+
+###  Executive Control Tower Dashboard & Power BI Embed
+*Real-time supply chain telematics, BOM risk matrix, and embedded Power BI workspace report.*
+
+![Executive Control Tower Dashboard](docs/architecture/control_tower_architecture.png)
+
+<br/>
+
+###  Multi-Agent Cyclical Orchestration Flow
+*LangGraph state machine routing requests across Researcher, Risk Analyst, and Critic nodes.*
+
+![LangGraph Cyclical Agent Architecture](docs/architecture/multi_agent_cyclical_flow.png)
+
+<br/>
+
+###  Telemetry & Streaming Data Pipeline
+*End-to-end telemetry flow from Kafka producers through PySpark streaming into PostgreSQL.*
+
+![Telemetry Data Flow Diagram](docs/architecture/data_flow_diagram.png)
+
+</div>
+
+---
 
 ---
 
