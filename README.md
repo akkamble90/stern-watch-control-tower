@@ -44,7 +44,7 @@ An enterprise-grade, real-time supply chain monitoring platform and multi-agent 
 ###  Control and Risk Metrics
 *Stock Risk association and control .*
 
-![Risk_Metrics](docs/screenshot/Critical_sock_risk_metric.png)
+![Risk_Metrics](docs/Screenshot/Critical_sock_risk_metric.png)
 
 </div>
 
