@@ -53,31 +53,50 @@ An enterprise-grade, real-time supply chain monitoring platform and multi-agent 
 ---
 
 ##  Architecture & Data Pipeline
+```
+    %% Subgraphs for Logical Layers
+    subgraph INGESTION[" Ingestion Layer"]
+        A["Real-Time Telematics<br/><i>(Kafka Producer)</i>"] -->|JSON Telemetry Events<br/>Port 9092| B["Apache Kafka Broker<br/><i>Topic: telemetry_topic</i>"]
+    end
 
-```text
-[ Real-Time Telematics / Kafka Producer ]
-                  │
-                  ▼ (JSON Telemetry Events over Port 9092)
-        [ Apache Kafka Broker ]
-                  │
-                  ▼ (Topic: telemetry_topic)
-  [ PySpark Structured Streaming Pipeline ]
-    ├── Schema Enforcement & Cleaning
-    └── Thermal / Speed Anomaly Enrichment
-                  │
-                  ▼ (Micro-batch Upserts via PostgreSQL JDBC)
-   [ PostgreSQL Operational Store (control_tower_db) ]
-    ├── telemetry_events
-    ├── warehouse_facilities
-    ├── fulfillment_kpis
-    └── inventory_stock
-                  │
-        ┌─────────┴────────────────────────┐
-        ▼                                  ▼
-[ Streamlit UI + Power BI Embed ]    [ LangGraph Multi-Agent Engine ]
-  ├── Power BI Interactive Reports     ├── Researcher Node
-  ├── Real-time Telemetry Stream       ├── Risk Analyst Node
-  └── HITL Command Console             └── Critic Verification Node
+    subgraph STREAMING[" Processing & Streaming Layer"]
+        B --> C["PySpark Structured Streaming"]
+        C --- C1["• Schema Enforcement & Cleaning<br/>• Thermal & Speed Anomaly Enrichment"]
+    end
+
+    subgraph STORAGE[" Persistence Layer"]
+        C -->|Micro-batch Upserts<br/>JDBC Connection| D[("PostgreSQL Operational Store<br/><i>control_tower_db</i>")]
+        D --- D1["• telemetry_events<br/>• warehouse_facilities<br/>• fulfillment_kpis<br/>• inventory_stock"]
+    end
+
+    subgraph CONSUMPTION[" Consumption & Orchestration Layer"]
+        D -->|REST / Direct Queries| E["Streamlit Control Tower UI"]
+        D -->|pgvector & SQL Queries| F["LangGraph Multi-Agent Engine"]
+
+        subgraph UI["Streamlit Frontend"]
+            E --> E1["Power BI Interactive Embed"]
+            E --> E2["Real-Time Telemetry Monitor"]
+            E --> E3["HITL Command Console"]
+        end
+
+        subgraph AGENTS["Agentic Workflow"]
+            F --> F1["Researcher Node"]
+            F1 --> F2["Risk Analyst Node"]
+            F2 --> F3["Critic Verification Node"]
+            F3 -.->|Feedback Loop| F1
+        end
+    end
+
+    %% Styling
+    classDef ingestion fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#000;
+    classDef streaming fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#000;
+    classDef storage fill:#e8f5e9,stroke:#388e3c,stroke-width:2px,color:#000;
+    classDef consumption fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,color:#000;
+
+    class A,B ingestion;
+    class C streaming;
+    class D storage;
+    class E,F,E1,E2,E3,F1,F2,F3 consumption;
 ```
 ---
 
