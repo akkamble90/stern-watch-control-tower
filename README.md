@@ -16,7 +16,29 @@ An enterprise-grade, real-time supply chain monitoring platform and multi-agent 
 
 ##  Architecture & Data Pipeline
 
-[ IoT Telematics / Kafka Producer ]│▼ (JSON Telemetry Events over Port 9092)[ Apache Kafka Broker ]│▼ (Topic: telemetry_topic)[ PySpark Structured Streaming Consumer ]Schema Enforcement & Data CleaningAnomaly Enrichment (Thermal / Speed Flags)│▼ (Batch Persistence via PostgreSQL JDBC)[ PostgreSQL Database: control_tower_db ]Table: telemetry_eventsTable: warehouse_facilitiesTable: fulfillment_kpisTable: inventory_stock│├────────────────────────────────────────┐▼                                        ▼[ Streamlit UI + Power BI iFrame ]        [ LangGraph Multi-Agent Engine ]Interactive Power BI Visuals             - Researcher Agent NodeInteractive Risk Matrix                  - Risk Analyst Agent NodeAgent Command Console                    - Critic Verification Node
+[ Real-Time Telematics / Kafka Producer ]
+                  │
+                  ▼ (JSON Telemetry Events over Port 9092)
+        [ Apache Kafka Broker ]
+                  │
+                  ▼ (Topic: telemetry_topic)
+  [ PySpark Structured Streaming Pipeline ]
+    ├── Schema Enforcement & Cleaning
+    └── Thermal / Speed Anomaly Enrichment
+                  │
+                  ▼ (Micro-batch Upserts via PostgreSQL JDBC)
+   [ PostgreSQL Operational Store (control_tower_db) ]
+    ├── telemetry_events
+    ├── warehouse_facilities
+    ├── fulfillment_kpis
+    └── inventory_stock
+                  │
+        ┌─────────┴────────────────────────┐
+        ▼                                  ▼
+[ Streamlit UI + Power BI Embed ]    [ LangGraph Multi-Agent Engine ]
+  ├── Power BI Interactive Reports     ├── Researcher Node
+  ├── Real-time Telemetry Stream       ├── Risk Analyst Node
+  └── HITL Command Console             └── Critic Verification Node
 ---
 
 ##  Technology Stack
@@ -35,7 +57,33 @@ An enterprise-grade, real-time supply chain monitoring platform and multi-agent 
 
 ##  Repository Structure
 
-stern-watch-control-tower/├── config/│   └── settings.py               # Centralized connection URIs and environmental variables├── src/│   ├── ingestion/│   │   ├── kafka_producers/│   │   │   └── telemetry_producer.py   # Simulates and streams vehicle telemetry JSON to Kafka│   │   └── spark_streaming/│   │       └── telemetry_geofence_stream.py # PySpark streaming consumer writing to PostgreSQL│   ├── agents/│   │   ├── state.py              # Shared AgentState TypedDict definition│   │   ├── researcher.py         # Researcher Agent node extracting inventory context│   │   ├── risk_analyst.py       # Risk Analyst node calculating line stoppage financial risks│   │   ├── critic.py             # Critic Agent node enforcing quality & verifying factuality│   │   └── graph_builder.py      # Compiles LangGraph state machine & edge routing│   └── ui/│       ├── main.py               # Primary Streamlit entry point│       └── components/│           ├── powerbi_embed.py  # Power BI iFrame embedded dashboard tab│           ├── bom_table.py      # Material risk matrix & Automotive BOM tracking│           └── agent_console.py  # Interactive multi-agent command console├── Makefile                      # Automated setup, service execution, and build commands├── requirements.txt              # Python dependency manifest└── README.md                     # Technical documentation
+## 📂 Repository Structure
+
+```text
+stern-watch-control-tower/
+├── config/
+│   └── settings.py               # Centralized connection URIs and environmental variables
+├── src/
+│   ├── ingestion/
+│   │   ├── kafka_producers/
+│   │   │   └── telemetry_producer.py   # Simulates and streams vehicle telemetry JSON to Kafka
+│   │   └── spark_streaming/
+│   │       └── telemetry_geofence_stream.py # PySpark streaming consumer writing to PostgreSQL
+│   ├── agents/
+│   │   ├── state.py              # Shared AgentState TypedDict definition
+│   │   ├── researcher.py         # Researcher Agent node extracting inventory context
+│   │   ├── risk_analyst.py       # Risk Analyst node calculating line stoppage financial risks
+│   │   ├── critic.py             # Critic Agent node enforcing quality & verifying factuality
+│   │   └── graph_builder.py      # Compiles LangGraph state machine & edge routing
+│   └── ui/
+│       ├── main.py               # Primary Streamlit entry point
+│       └── components/
+│           ├── powerbi_embed.py  # Power BI iFrame embedded dashboard tab
+│           ├── bom_table.py      # Material risk matrix & Automotive BOM tracking
+│           └── agent_console.py  # Interactive multi-agent command console
+├── Makefile                      # Automated setup, service execution, and build commands
+├── requirements.txt              # Python dependency manifest
+└── README.md                     # Technical documentation
 ---
 
 ##  Prerequisites & Setup
