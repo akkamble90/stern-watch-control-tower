@@ -16,6 +16,7 @@ An enterprise-grade, real-time supply chain monitoring platform and multi-agent 
 
 ##  Architecture & Data Pipeline
 
+```text
 [ Real-Time Telematics / Kafka Producer ]
                   │
                   ▼ (JSON Telemetry Events over Port 9092)
@@ -39,6 +40,7 @@ An enterprise-grade, real-time supply chain monitoring platform and multi-agent 
   ├── Power BI Interactive Reports     ├── Researcher Node
   ├── Real-time Telemetry Stream       ├── Risk Analyst Node
   └── HITL Command Console             └── Critic Verification Node
+```
 ---
 
 ##  Technology Stack
