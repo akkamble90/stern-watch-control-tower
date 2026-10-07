@@ -53,23 +53,24 @@ An enterprise-grade, real-time supply chain monitoring platform and multi-agent 
 ---
 
 ##  Architecture & Data Pipeline
-```
+```mermaid
+flowchart TD
     %% Subgraphs for Logical Layers
-    subgraph INGESTION[" Ingestion Layer"]
+    subgraph INGESTION["📡 Ingestion Layer"]
         A["Real-Time Telematics<br/><i>(Kafka Producer)</i>"] -->|JSON Telemetry Events<br/>Port 9092| B["Apache Kafka Broker<br/><i>Topic: telemetry_topic</i>"]
     end
 
-    subgraph STREAMING[" Processing & Streaming Layer"]
+    subgraph STREAMING["⚡ Processing & Streaming Layer"]
         B --> C["PySpark Structured Streaming"]
         C --- C1["• Schema Enforcement & Cleaning<br/>• Thermal & Speed Anomaly Enrichment"]
     end
 
-    subgraph STORAGE[" Persistence Layer"]
+    subgraph STORAGE["🗄️ Persistence Layer"]
         C -->|Micro-batch Upserts<br/>JDBC Connection| D[("PostgreSQL Operational Store<br/><i>control_tower_db</i>")]
         D --- D1["• telemetry_events<br/>• warehouse_facilities<br/>• fulfillment_kpis<br/>• inventory_stock"]
     end
 
-    subgraph CONSUMPTION[" Consumption & Orchestration Layer"]
+    subgraph CONSUMPTION["🖥️ Consumption & Orchestration Layer"]
         D -->|REST / Direct Queries| E["Streamlit Control Tower UI"]
         D -->|pgvector & SQL Queries| F["LangGraph Multi-Agent Engine"]
 
