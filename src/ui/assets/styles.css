@@ -1,0 +1,60 @@
+ * MERCEDES-BENZ ENTERPRISE BRANDING STYLES
+
+/* Main Background */
+.stApp {
+    background-color: #0E1117;
+    color: #F0F2F6;
+    font-family: 'Segoe UI', 'Helvetica Neue', Roboto, sans-serif;
+}
+
+/* Sidebar Dark Theme */
+[data-testid="stSidebar"] {
+    background-color: #161922;
+    border-right: 1px solid #2D313E;
+}
+
+/* Custom Executive KPI Cards */
+.stMetric {
+    background-color: #1E222D;
+    padding: 18px;
+    border-radius: 8px;
+    border-left: 5px solid #00ADEF;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Agent Container Card */
+.agent-card {
+    background-color: #1A1C24;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #2D313E;
+    margin-bottom: 15px;
+}
+
+/* Tab Highlight */
+button[data-baseweb="tab"] {
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    color: #A0AABF !important;
+}
+
+button[aria-selected="true"] {
+    color: #00ADEF !important;
+    border-bottom-color: #00ADEF !important;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #0E1117;
+}
+::-webkit-scrollbar-thumb {
+    background: #2D313E;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #00ADEF;
+}

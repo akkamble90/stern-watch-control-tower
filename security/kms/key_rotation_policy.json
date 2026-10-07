@@ -1,0 +1,20 @@
+{
+  "key_management_policy": {
+    "version": "1.0.0",
+    "kms_provider": "AWS_KMS",
+    "master_key_alias": "alias/stern-watch-master-key",
+    "key_spec": "SYMMETRIC_DEFAULT",
+    "algorithm": "AES_256",
+    "rotation_rules": {
+      "auto_rotate_days": 90,
+      "reencrypt_historical_data": false,
+      "key_deletion_grace_period_days": 30
+    },
+    "access_control": {
+      "allow_roles": [
+        "arn:aws:iam::123456789012:role/SternWatchControlTowerKMSUser",
+        "arn:aws:iam::123456789012:role/SternWatchAirflowWorker"
+      ]
+    }
+  }
+}

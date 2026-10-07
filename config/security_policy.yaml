@@ -1,0 +1,43 @@
+security_policy:
+  version: "1.0.0"
+  environment: "production"
+
+  encryption:
+    algorithm: "AES-256-GCM"
+    key_rotation_days: 90
+    sensitive_fields:
+      - "unit_cost"
+      - "margin_eur"
+      - "supplier_contract_id"
+      - "customs_tax_id"
+
+  role_based_access_control:
+    roles:
+      - name: "Executive"
+        permissions:
+          - "read:analytics"
+          - "read:agent_reports"
+          - "read:powerbi"
+      - name: "SupplyChainDirector"
+        permissions:
+          - "read:analytics"
+          - "read:agent_reports"
+          - "read:powerbi"
+          - "execute:hitl_action"
+          - "override:agent_decision"
+      - name: "PlantOperationsManager"
+        permissions:
+          - "read:analytics"
+          - "read:plant_stock"
+          - "execute:hitl_action"
+
+  human_in_the_loop_thresholds:
+    auto_approval_max_cost_eur: 100000.00
+    mandatory_review_roles:
+      - "SupplyChainDirector"
+    audit_trail_required: true
+
+  network_security:
+    tls_min_version: "TLSv1.3"
+    allowed_cors_origins:
+      - "http://localhost:8501"

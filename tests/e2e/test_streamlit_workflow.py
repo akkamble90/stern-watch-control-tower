@@ -1,0 +1,36 @@
+import pytest
+from src.agents.graph_builder import agent_app
+from src.common.security import security_manager
+
+def test_full_agent_to_hitl_e2e_workflow(mock_neo4j_driver):
+    # 1. Trigger agent graph execution
+    initial_state = {
+        "query": "Taiwan Fab 14 power outage impact on MCU-A32-S?",
+        "research_data": {},
+        "analysis_report": "",
+        "critic_feedback": "",
+        "revision_count": 0,
+        "is_verified": False,
+        "requires_hitl": False
+    }
+    
+    final_state = agent_app.invoke(initial_state)
+    
+    assert final_state["is_verified"] is True
+    assert "EXPOSURE & RISK EVALUATION REPORT" in final_state["analysis_report"]
+    assert final_state["requires_hitl"] is True
+    
+    # 2. Simulate User Approval Action
+    approval_payload = {
+        "action": "REROUTE_DEMAND",
+        "part_number": final_state["research_data"]["part_number"],
+        "target_supplier": final_state["research_data"]["alternative_suppliers"][0]
+    }
+    
+    audit_record = security_manager.generate_hitl_signature(
+        user_id="U90214_OPERATOR",
+        action_type="EMERGENCY_ORDER_APPROVAL",
+        payload=approval_payload
+    )
+    
+    assert security_manager.verify_hitl_signature(audit_record) is True

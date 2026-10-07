@@ -1,0 +1,15 @@
+sequenceDiagram
+    autonumber
+    participant Sensor as Ocean/Road Telematics
+    participant Kafka as Apache Kafka Broker
+    participant Spark as PySpark Engine
+    participant DB as Postgres/pgvector
+    participant Agent as LangGraph Cyclical Agents
+    participant UI as Streamlit UI
+
+    Sensor->>Kafka: Emit Container Coordinates & Temp
+    Kafka->>Spark: Stream Structured Ingestion
+    Spark->>DB: Write Geofence Events & Anomaly Flags
+    DB->>Agent: Trigger Risk Evaluator on Threshold Breach
+    Agent->>Agent: Cyclic Research, Analysis, & Verification
+    Agent->>UI: Render Actionable Alert & HITL Approval

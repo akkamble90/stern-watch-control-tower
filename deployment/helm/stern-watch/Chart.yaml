@@ -1,0 +1,6 @@
+apiVersion: v2
+name: stern-watch
+description: Helm chart for Mercedes-Benz Intelligent Supply Chain Control Tower
+type: application
+version: 0.1.0
+appVersion: "1.0.0"

@@ -1,0 +1,36 @@
+{
+  "data_asset_type": "FreightTelemetryStream",
+  "expectation_suite_name": "telemetry_stream_contract",
+  "expectations": [
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": {
+        "column": "container_id"
+      }
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_between",
+      "kwargs": {
+        "column": "latitude",
+        "min_value": -90.0,
+        "max_value": 90.0
+      }
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_between",
+      "kwargs": {
+        "column": "longitude",
+        "min_value": -180.0,
+        "max_value": 180.0
+      }
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_between",
+      "kwargs": {
+        "column": "ambient_temp_celsius",
+        "min_value": -40.0,
+        "max_value": 70.0
+      }
+    }
+  ]
+}

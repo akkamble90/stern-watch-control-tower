@@ -1,0 +1,25 @@
+{
+  "authority_url": "https://login.microsoftonline.com/",
+  "scope": ["https://analysis.windows.net/powerbi/api/.default"],
+  "api_url": "https://api.powerbi.com/v1.0/myorg/",
+  "embed_settings": {
+    "filter_pane_enabled": false,
+    "nav_bar_enabled": true,
+    "locale_settings": "en-US",
+    "theme": "dark"
+  },
+  "dashboard_metadata": {
+    "name": "Mercedes-Benz Global Supply Chain Executive Dashboard",
+    "refresh_interval_seconds": 300,
+    "pages": [
+      {
+        "id": "ReportSection1",
+        "displayName": "Global Network Overview"
+      },
+      {
+        "id": "ReportSection2",
+        "displayName": "Critical Stock & Risk Matrix"
+      }
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+graph TD
+    A[Global Logistics Telemetry / AIS GPS] -->|Kafka Topics| B(Apache Spark Streaming)
+    C[SAP IBP / ERP Core Logs] -->|Batch IDocs| D(Airflow ETL Pipelines)
+    B --> E[(PostgreSQL Lakehouse / Delta)]
+    D --> F[(Neo4j Knowledge Graph)]
+    E --> G[Predictive Engine: XGBoost & Prophet]
+    F --> H[LangGraph Multi-Agent Cyclical System]
+    G --> H
+    H --> I[Streamlit Control Tower UI]
+    I --> J[Power BI Embedded Visuals]

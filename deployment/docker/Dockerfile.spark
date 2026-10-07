@@ -1,0 +1,17 @@
+FROM bitnami/spark:3.5.0
+
+USER root
+
+# Install Python packages required for PySpark streaming and delta lake
+RUN pip install --no-cache-dir \
+    pyspark==3.5.0 \
+    kafka-python==2.0.2 \
+    delta-spark==3.1.0 \
+    psycopg2-binary==2.9.9
+
+WORKDIR /opt/bitnami/spark/apps
+
+COPY src/ingestion/ /opt/bitnami/spark/apps/ingestion/
+COPY config/ /opt/bitnami/spark/apps/config/
+
+USER 1001

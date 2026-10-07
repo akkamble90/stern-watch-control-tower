@@ -1,0 +1,12 @@
+stateDiagram-v2
+    [*] --> ResearcherAgent
+    ResearcherAgent --> RiskAnalystAgent: Raw Graph & Vector Context
+    RiskAnalystAgent --> CriticAgent: Draft Exposure & Stoppage Report
+    state CriticAgent {
+        [*] --> CheckLogic
+        CheckLogic --> CheckMath
+        CheckMath --> HallucinationGuard
+    }
+    CriticAgent --> RiskAnalystAgent: Feedback Loop (If Validation Fails)
+    CriticAgent --> HumanInTheLoop: Approved & Verified Report
+    HumanInTheLoop --> [*]: User Approval / SAP BAPI Call

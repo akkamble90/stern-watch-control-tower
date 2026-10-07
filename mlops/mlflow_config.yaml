@@ -1,0 +1,17 @@
+mlflow:
+  experiment_name: "stern_watch_delay_prediction"
+  tracking_uri: "http://localhost:5000"  # MLflow Tracking Server URI
+  artifact_location: "s3://stern-watch-mlops-artifacts/models/"
+
+model_registry:
+  registered_model_name: "InboundTransitDelayPredictor"
+  stage: "Production"
+
+metrics_thresholds:
+  max_acceptable_rmse_hours: 12.0
+  max_acceptable_mape: 0.15
+  min_r2_score: 0.82
+
+retraining_triggers:
+  performance_degradation_pct: 10.0
+  ks_test_drift_p_value: 0.05
